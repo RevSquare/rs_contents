@@ -1,0 +1,38 @@
+{% extends 'admin/change_form.html' %}
+{% load i18n admin_urls admin_static admin_modify %}
+
+{% block extrahead %}{{ block.super }}
+    {% if original.pk %}
+        <script type="text/javascript">
+            (function($){
+
+
+                function show_preview(){
+                  {% url opts|admin_urlname:'preview' original.pk|admin_urlquote as preview_url  %}
+                  $.post("{% add_preserved_filters preview_url %}", $('form').serialize()).done(function(data){
+                      if (data == 'success'){
+                          $('#preview_iframe')[0].src="{{ original.get_absolute_url }}?preview=1";
+                          $('#preview_iframe')[0].height = '800px';
+                          window.location= '#preview_iframe'
+                        }
+                      else
+                         alert('Form not valid:' + data);
+                  });
+
+                };
+
+                $(document).ready(function() {
+                    var preview_html = '<li><a href="#" id="show_preview" class="historylink">{% trans "Preview" %}</a></li>'
+                    $('header ul').append(preview_html)
+                    $('#show_preview').click(show_preview);
+                });
+          })(django.jQuery);
+        </script>
+    {% endif %}
+{% endblock %}
+
+
+{% block after_related_objects %}
+{{ block.super }}
+<iframe id="preview_iframe" width="100%" ></iframe>
+{% endblock %}
