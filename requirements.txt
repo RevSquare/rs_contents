@@ -1,2 +1,2 @@
-
+-e git+https://github.com/RevSquare/django-brightcove#egg=django-brightcove
 beautifulsoup4==4.3.2
