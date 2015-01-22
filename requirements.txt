@@ -1,1 +1,2 @@
--e git+ssh://git@git.revsquare.com/revsquare/economist-content-page.git@0.2.7.3#egg=economist-content-page
+
+beautifulsoup4==4.3.2
